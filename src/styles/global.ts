@@ -2,12 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
     *{
-        background-color:grey;
         margin: 0;
         padding: 0;
         outline:0;
         box-sizing: border-box;
         font-family: 'Open Sans', sans-serif; 
+    }
+
+    body{
+        background-color:#20A39E;
     }
  `;
 export default GlobalStyle;

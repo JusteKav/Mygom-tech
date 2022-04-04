@@ -7,11 +7,13 @@ type DropdownSelectionContainerProps = {
 };
 const DropdownSelectionContainerStyled = styled.div`
   background-color: white;
-  width: 500px;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   border-radius: 25px;
+  overflow: auto;
+  max-height: 700px;
 `;
 
 const DropdownSelectionContainer: React.FC<DropdownSelectionContainerProps> = ({ style, children }) => {
