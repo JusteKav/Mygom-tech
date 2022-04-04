@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DropdownItem from '../DropdownItem';
-import DropdownTitle from '../DropdownTitle';
-import DropdownSelectionContainer from '../DropdownSelectionContainer';
+import DropdownItem from './DropdownItem';
+import DropdownTitle from './DropdownTitle';
+import DropdownSelectionContainer from './DropDownSelectionContainer';
 import { useUniqueData } from '../../utils/hooks/index';
 
 const DropdownContainer = styled.div`
