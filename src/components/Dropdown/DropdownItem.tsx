@@ -12,7 +12,6 @@ const DropdownItemStyled = styled.div`
   height: 100%;
   width: 100%;
   padding: 0px 30px;
-  // border-radius: 25px;
   display: flex;
   justify-content: space-between;
   & label {

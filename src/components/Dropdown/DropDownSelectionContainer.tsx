@@ -14,6 +14,8 @@ const DropdownSelectionContainerStyled = styled.div`
   border-radius: 25px;
   overflow: auto;
   max-height: 700px;
+  display: flex;
+  justify-content: center;
 `;
 
 const DropdownSelectionContainer: React.FC<DropdownSelectionContainerProps> = ({ style, children }) => {

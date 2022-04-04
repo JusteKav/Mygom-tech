@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import upperArrow from '../../images/arrow.jpg';
 
 type DropdownTitleProps = {
   title: string;
@@ -24,18 +23,11 @@ const ButttonStyled = styled.button`
   border: 0px;
 `;
 
-// const DownArrowStyled = styled.img`
-//   height: 30px;
-//   width: 30px;
-//   background-color: white;
-// `;
-
 const DropdownTitle: React.FC<DropdownTitleProps> = ({ title, style, action, open }) => {
   return (
     <DropdownTitleStyled onClick={action} style={{ ...style }}>
       <p>{title}</p>
       <ButttonStyled>{open}</ButttonStyled>
-      {/* <DownArrowStyled src={upperArrow} alt="arrow" /> */}
     </DropdownTitleStyled>
   );
 };
