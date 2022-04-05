@@ -5,7 +5,7 @@ type DropdownTitleProps = {
   title: string;
   style?: object;
   action?: () => void;
-  open: string;
+  open?: string;
 };
 const DropdownTitleStyled = styled.div`
   background-color: transparent;
@@ -18,16 +18,17 @@ const DropdownTitleStyled = styled.div`
   justify-content: space-between;
 `;
 
-const ButttonStyled = styled.button`
+const InputStyled = styled.input`
   background: transparent;
   border: 0px;
+  font-size: 16px;
 `;
 
 const DropdownTitle: React.FC<DropdownTitleProps> = ({ title, style, action, open }) => {
   return (
     <DropdownTitleStyled onClick={action} style={{ ...style }}>
-      <p>{title}</p>
-      <ButttonStyled>{open}</ButttonStyled>
+      <InputStyled value={title} type="button"></InputStyled>
+      <InputStyled value={open} type="button"></InputStyled>
     </DropdownTitleStyled>
   );
 };

@@ -24,60 +24,69 @@ type ItemProps = {
 };
 
 type DropdownProps = {
-  title: string;
-  items: ItemProps[];
+  // The default value is shown when value is not selected.
+  defaultValue: string;
+  // Items are data considered as array of objects with keys as id, value and group.
+  options: ItemProps[];
+  // onClose?: () => void;
+  // onOpen?: () => void;
+  // Open sets options of dropdown menu to open or close. True = open, false = close.
+  open?: boolean;
 };
 
-export const Dropdown: React.FC<DropdownProps> = ({ title, items }) => {
-  const groups = items.map(({ group }) => group);
+export const Dropdown: React.FC<DropdownProps> = ({ defaultValue, options, open }) => {
+  const groups = options.map(({ group }) => group);
   const uniqueGroups = useUniqueData(groups);
 
-  const [display, setDisplay] = useState('none');
-  const [input, setInput] = useState('');
-  const [filteredValues, setFilteredValues] = useState<ItemProps[]>(items);
-  const [open, setOpen] = useState('open');
-  const [values, setValues] = useState<string[]>([]);
+  const [optionsDisplay, setOptionsDisplay] = useState(open ? 'block' : 'none');
+  const [dropdownSelectionValue, setDropdownSelectionValue] = useState('');
+  const [searchFilteredOptions, setSearchFilteredOptions] = useState<ItemProps[]>(options);
+  const [openDropdown, setOpenDropdown] = useState('open');
+  const [dropdownSelectedValues, setDropdownSelectedValues] = useState<string[]>([]);
 
-  const onOpen = () => {
-    setOpen('close');
-    setDisplay('block');
+  const handleOpen = () => {
+    setOpenDropdown('close');
+    setOptionsDisplay('block');
   };
 
-  const onClose = () => {
-    setOpen('open');
-    setDisplay('none');
+  const handleClose = () => {
+    setOpenDropdown('open');
+    setOptionsDisplay('none');
   };
 
   const handleDisplay = () => {
-    if (display === 'none') {
-      onOpen();
+    if (optionsDisplay === 'none') {
+      handleOpen();
     } else {
-      onClose();
+      handleClose();
     }
   };
 
   const handleSelect = (val: string) => {
-    const filteredItems: ItemProps[] = items.filter(({ value }) => value.includes(val));
-    setFilteredValues(filteredItems);
+    const filteredItems: ItemProps[] = options.filter(({ value }) => value.toUpperCase().includes(val.toUpperCase()));
+    setSearchFilteredOptions(filteredItems);
   };
 
   return (
     <DropdownContainer>
       <DropdownSelectionContainer style={{ marginBottom: '5px' }}>
-        <DropdownTitle action={handleDisplay} title={values.length === 0 ? title : values.join(', ')} open={open} />
+        <DropdownTitle
+          action={handleDisplay}
+          title={dropdownSelectedValues.length === 0 ? defaultValue : dropdownSelectedValues.join(', ')}
+          open={openDropdown}
+        />
       </DropdownSelectionContainer>
-      <DropdownSelectionContainer style={{ display: display }}>
+      <DropdownSelectionContainer style={{ display: optionsDisplay }}>
         <DropdownItem>
           <InputStyled
-            onSelect={() => handleSelect(input)}
-            onChange={(e) => setInput(e.target.value)}
+            onSelect={() => handleSelect(dropdownSelectionValue)}
+            onChange={(e) => setDropdownSelectionValue(e.target.value)}
             placeholder="Search for option"
-            type="text"
-            value={input}
+            value={dropdownSelectionValue}
           ></InputStyled>
         </DropdownItem>
-        {uniqueGroups.map((el) => {
-          const filteredItems = filteredValues.filter(({ group }) => group === el);
+        {uniqueGroups.map((el: string) => {
+          const filteredItems = searchFilteredOptions.filter(({ group }) => group === el);
           return (
             <div key={el}>
               <DropdownItem style={{ fontWeight: 'bold' }}>
@@ -92,7 +101,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ title, items }) => {
                         id={value}
                         type="checkbox"
                         onChange={(e) => {
-                          setValues(useFilteredSelectionData(e.target.id, values));
+                          setDropdownSelectedValues(useFilteredSelectionData(e.target.id, dropdownSelectedValues));
                         }}
                       />
                     </DropdownItem>
